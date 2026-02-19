@@ -6,7 +6,7 @@ export default NextAuth({
     SpotifyProvider({
       clientId: process.env.SPOTIFY_CLIENT_ID,
       clientSecret: process.env.SPOTIFY_CLIENT_SECRET,
-      authorization: 'https://accounts.spotify.com/authorize?scope=user-read-currently-playing',
+      authorization: 'https://accounts.spotify.com/authorize?scope=user-read-currently-playing,user-read-playback-state',
     }),
   ],
   callbacks: {
@@ -17,8 +17,9 @@ export default NextAuth({
       return token;
     },
     async session({ session, token }) {
-      session.accessToken = token.accessToken; // This passes the token to the widget
+      session.accessToken = token.accessToken;
       return session;
     },
   },
-  secret: process.env.NEXTAUTH_SECRET, // This is mandatory for the session to "stick"
+  secret: process.env.NEXTAUTH_SECRET,
+});
